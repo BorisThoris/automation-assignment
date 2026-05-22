@@ -56,6 +56,8 @@ Outputs are regenerated on each run:
 
 `results/` is git-ignored. Failed-run diagnostics go to `results/debug/`.
 
+During a live browser run, short pauses are expected. The automation waits for Google redirects, Notion onboarding transitions, and member/settings page readiness before moving to the next action. These waits make the flow less flaky on slower network responses.
+
 ## Development Utilities
 
 These are destructive helpers for retesting with disposable Notion data.
