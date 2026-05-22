@@ -63,16 +63,30 @@ These are guarded helpers for retesting with disposable Notion data:
 Delete the current Notion workspace, which can force workspace onboarding again:
 
 ```sh
-# Requires CONFIRM_DELETE_WORKSPACE=true
 npm run notion:workspace:delete
 ```
 
 Delete the Notion account associated with the configured Google login:
 
 ```sh
-# Requires CONFIRM_DELETE_ACCOUNT=true
 npm run notion:account:delete
 ```
+
+Both commands require their confirmation flags to be set in `.env`:
+
+```dotenv
+CONFIRM_DELETE_WORKSPACE=true
+CONFIRM_DELETE_ACCOUNT=true
+```
+
+For one-off PowerShell runs without editing `.env`:
+
+```powershell
+$env:CONFIRM_DELETE_WORKSPACE="true"; npm run notion:workspace:delete
+$env:CONFIRM_DELETE_ACCOUNT="true"; npm run notion:account:delete
+```
+
+When npm prints a line like `accessowl-browser-automation@1.0.0 notion:account:delete`, that is npm output, not a command to type.
 
 Prefer workspace deletion for onboarding retests. Full account deletion is more destructive.
 
