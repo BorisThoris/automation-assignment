@@ -23,7 +23,7 @@ docs/           Architecture and reviewer-facing project notes.
 - `src/useCases/*` owns orchestration such as exporting workspace members or deleting a test account.
 - `src/adapters/playwright/*` translates use-case ports into live Notion/Google browser actions.
 - `src/domain/*` contains deterministic parsing that can be tested without Playwright.
-- `src/app/composition.ts` wires use cases to adapters and validates destructive `CONFIRM_*` flags before browser startup.
+- `src/app/composition.ts` wires use cases to adapters before browser startup.
 
 ## Adding Another Use Case
 
@@ -33,7 +33,7 @@ docs/           Architecture and reviewer-facing project notes.
 4. Implement the port in `src/adapters/`.
 5. Wire the use case in `src/app/composition.ts`.
 6. Add an npm script that points to the CLI wrapper.
-7. Keep any destructive action behind an explicit `CONFIRM_*` environment variable.
+7. Keep destructive actions as separate, clearly named commands.
 
 ## Design Notes
 

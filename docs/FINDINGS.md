@@ -23,21 +23,14 @@ TOTP is a theoretical alternate path because authenticator codes can be typed di
 
 Notion onboarding only appears for a new or reset account/workspace. To retest the full account creation/onboarding path with the same Gmail account, the Notion account can be deleted and recreated by logging in again with Google.
 
-The project includes guarded lifecycle commands for this:
+The project includes separate lifecycle commands for this:
 
 ```sh
 npm run notion:workspace:delete
 npm run notion:account:delete
 ```
 
-Both commands require explicit confirmation flags in `.env` before they run:
-
-```dotenv
-CONFIRM_DELETE_WORKSPACE=true
-CONFIRM_DELETE_ACCOUNT=true
-```
-
-For most retesting, deleting the workspace is enough to force the onboarding path again. Deleting the full Notion account is more destructive and should only be used with disposable test accounts.
+The command names are intentionally explicit because they perform destructive actions. For most retesting, deleting the workspace is enough to force the onboarding path again. Deleting the full Notion account is more destructive and should only be used with disposable test accounts.
 
 ## Output
 

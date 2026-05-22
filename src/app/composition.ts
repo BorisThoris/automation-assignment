@@ -24,12 +24,6 @@ export function runDeleteNotionWorkspace() {
       authenticator: notionClient,
       workspaceLifecycle: notionClient
     });
-  }, {
-    validateConfig: (config) => {
-      if (!config.confirmDeleteWorkspace) {
-        throw new Error("Refusing to delete a Notion workspace without CONFIRM_DELETE_WORKSPACE=true.");
-      }
-    }
   });
 }
 
@@ -40,11 +34,5 @@ export function runDeleteNotionAccount() {
       authenticator: notionClient,
       accountLifecycle: notionClient
     });
-  }, {
-    validateConfig: (config) => {
-      if (!config.confirmDeleteAccount) {
-        throw new Error("Refusing to delete a Notion account without CONFIRM_DELETE_ACCOUNT=true.");
-      }
-    }
   });
 }

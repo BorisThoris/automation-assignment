@@ -18,9 +18,7 @@ export type AppConfig = {
   outputDir: string;
   takeScreenshot: boolean;
   sessionStatePath: string;
-  confirmDeleteWorkspace: boolean;
   notionWorkspaceDeleteName?: string;
-  confirmDeleteAccount: boolean;
 };
 
 function required(name: string): string {
@@ -66,9 +64,7 @@ export function loadConfig(): AppConfig {
     outputDir: path.resolve(process.env.OUTPUT_DIR?.trim() || "results"),
     takeScreenshot: booleanEnv("TAKE_SCREENSHOT", true),
     sessionStatePath: path.resolve(process.env.SESSION_STATE_PATH?.trim() || ".auth/notion-state.json"),
-    confirmDeleteWorkspace: booleanEnv("CONFIRM_DELETE_WORKSPACE", false),
-    notionWorkspaceDeleteName: process.env.NOTION_WORKSPACE_DELETE_NAME?.trim() || undefined,
-    confirmDeleteAccount: booleanEnv("CONFIRM_DELETE_ACCOUNT", false)
+    notionWorkspaceDeleteName: process.env.NOTION_WORKSPACE_DELETE_NAME?.trim() || undefined
   };
 
   validateConfig(config);
