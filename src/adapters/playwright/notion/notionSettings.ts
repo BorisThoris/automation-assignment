@@ -5,6 +5,26 @@ import { saveDebugPage } from "../../../shared/debug.js";
 import { dismissNotionInterstitials } from "./notionDetection.js";
 
 export async function openNotionSettings(page: Page): Promise<void> {
+  let lastError: unknown;
+
+  for (let attempt = 1; attempt <= 3; attempt += 1) {
+    try {
+      await openNotionSettingsOnce(page);
+      await waitForNotionSettingsReady(page);
+      return;
+    } catch (error) {
+      lastError = error;
+      await saveDebugPage(page, `settings-open-attempt-${attempt}`).catch(() => undefined);
+      if (attempt < 3) await recoverBeforeSettingsRetry(page);
+    }
+  }
+
+  throw lastError instanceof Error
+    ? lastError
+    : new Error("Could not open Notion settings after multiple attempts.");
+}
+
+async function openNotionSettingsOnce(page: Page): Promise<void> {
   await dismissNotionInterstitials(page);
 
   if (await clickFirstVisibleOptional([
@@ -56,6 +76,17 @@ export async function openNotionSettings(page: Page): Promise<void> {
   await page.waitForTimeout(750);
   if (!await clickSettingsMenuItem(page)) {
     await clickFirstVisible(page, settingsLocators(page));
+  }
+}
+
+async function recoverBeforeSettingsRetry(page: Page): Promise<void> {
+  await page.keyboard.press("Escape").catch(() => undefined);
+  await page.waitForTimeout(500);
+  await dismissNotionInterstitials(page).catch(() => undefined);
+
+  if (page.url().includes("notion.so")) {
+    await page.reload({ waitUntil: "domcontentloaded", timeout: 30_000 }).catch(() => undefined);
+    await page.waitForTimeout(1_500);
   }
 }
 
@@ -127,6 +158,6 @@ async function waitForNotionSettingsReady(page: Page): Promise<void> {
   await page.waitForFunction(() => {
     const text = document.body.innerText;
     return /Account/i.test(text) && /Workspace/i.test(text) && /People/i.test(text);
-  }, null, { timeout: 30_000 }).catch(() => undefined);
+  }, null, { timeout: 30_000 });
   await page.waitForTimeout(750);
 }
