@@ -2,16 +2,26 @@
   "name": "accessowl-browser-automation",
   "version": "1.0.0",
   "type": "module",
-  "main": "dist/index.js",
+  "main": "dist/cli/exportMembers.js",
   "scripts": {
-    "start": "tsx src/index.ts",
+    "export:members": "tsx src/cli/exportMembers.ts",
+    "export:members:clean": "tsx scripts/exportMembersClean.ts",
+    "notion:workspace:delete": "tsx src/cli/deleteWorkspace.ts",
+    "notion:account:delete": "tsx src/cli/deleteAccount.ts",
     "build": "tsc --noEmit",
-    "check": "tsc --noEmit"
+    "check": "tsc --noEmit",
+    "test": "vitest run",
+    "verify": "npm run check && npm run test"
   },
-  "keywords": [],
+  "keywords": [
+    "playwright",
+    "browser-automation",
+    "notion",
+    "typescript"
+  ],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "Production-style TypeScript Playwright automation for Notion member export and test-account lifecycle flows.",
   "dependencies": {
     "dotenv": "^17.4.2",
     "otplib": "^13.4.0",
@@ -20,6 +30,7 @@
   "devDependencies": {
     "@types/node": "^25.9.1",
     "tsx": "^4.22.3",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.7"
   }
 }
