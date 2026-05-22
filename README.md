@@ -19,7 +19,7 @@ cp .env.sample .env
 npm run verify
 ```
 
-Fill `.env`:
+Copy `.env.sample` to `.env`, then fill out the real values in `.env` before running the browser automation. At minimum, set:
 
 ```dotenv
 GOOGLE_EMAIL=you@example.com
