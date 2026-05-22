@@ -31,14 +31,22 @@ CHROME_EXECUTABLE_PATH=/path/to/chrome
 
 ## Run
 
+Export members from Notion using the current local browser/session state:
+
 ```sh
 npm run export:members
 ```
 
-For a fresh local browser/session run:
+Clear local Playwright/Chrome auth state, then run the full export flow from a fresh login:
 
 ```sh
 npm run export:members:clean
+```
+
+Validate TypeScript and run unit tests without opening a browser:
+
+```sh
+npm run verify
 ```
 
 Outputs are regenerated on each run:
@@ -52,10 +60,16 @@ Outputs are regenerated on each run:
 
 These are guarded helpers for retesting with disposable Notion data:
 
+Delete the current Notion workspace, which can force workspace onboarding again:
+
 ```sh
 # Requires CONFIRM_DELETE_WORKSPACE=true
 npm run notion:workspace:delete
+```
 
+Delete the Notion account associated with the configured Google login:
+
+```sh
 # Requires CONFIRM_DELETE_ACCOUNT=true
 npm run notion:account:delete
 ```
