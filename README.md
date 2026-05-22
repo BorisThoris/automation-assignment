@@ -2,6 +2,14 @@
 
 TypeScript + Playwright automation for exporting members from a Notion workspace after signing in with Google.
 
+## Findings
+
+- Use a disposable Google account without interactive two-step verification for the most reliable fully automated run.
+- Phone prompts, SMS, and device confirmations require action outside the browser. They could be automated with Android emulation, but that is much more complex than this challenge needs.
+- `GOOGLE_TOTP_SECRET` exists as best-effort support for in-browser authenticator-code challenges, but that path was not fully validated.
+- Notion workspace/account deletion can reset onboarding for retesting with the same Gmail account. Prefer workspace deletion; full account deletion is only for disposable test accounts.
+- Results are stable files: `results/members.json` and `results/members.png`.
+
 ## Quick Start
 
 ```sh
@@ -20,8 +28,6 @@ NOTION_WORKSPACE_URL=https://www.notion.so
 USE_CDP_CHROME=true
 CHROME_EXECUTABLE_PATH=/path/to/chrome
 ```
-
-For the most reliable fully automated run, use a disposable Google account without interactive two-step verification. Phone prompts, SMS, and device confirmations require action outside the browser.
 
 ## Run
 
@@ -80,4 +86,3 @@ More detail:
 
 - Final JSON includes `name`, `email`, and `role`.
 - `.env.sample` is committed; real `.env` is ignored.
-- `GOOGLE_TOTP_SECRET` exists as best-effort support for in-browser code challenges, but the validated setup used no interactive second factor.
