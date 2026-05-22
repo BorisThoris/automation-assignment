@@ -58,6 +58,8 @@ Outputs are regenerated on each run:
 
 During a live browser run, short pauses are expected. The automation waits for Google redirects, Notion onboarding transitions, and member/settings page readiness before moving to the next action. These waits make the flow less flaky on slower network responses.
 
+Some Notion UI transitions are retried when a control is not found on the first attempt. Failed attempts write debug captures under `results/debug/` so selector or layout changes can be inspected.
+
 ## Development Utilities
 
 These are destructive helpers for retesting with disposable Notion data.
